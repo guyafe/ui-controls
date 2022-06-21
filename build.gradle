@@ -8,11 +8,12 @@ buildscript {
   dependencies {
     classpath "org.openjfx:javafx-plugin:0.0.13"
   }
-}
-apply plugin: "org.openjfx.javafxplugin"
 
+}
 group 'il.co.site_building.ui_controls'
 version '0.0.1'
+
+apply plugin: "org.openjfx.javafxplugin"
 
 dependencies {
 }
