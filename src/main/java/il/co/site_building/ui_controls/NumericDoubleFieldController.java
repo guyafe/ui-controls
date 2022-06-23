@@ -12,9 +12,10 @@ import javafx.scene.input.KeyEvent;
 
 public class NumericDoubleFieldController implements Initializable {
 
-  private static final String REAL_NUMBER_PATTERN = "";
-  private static final String BORDER_READ = "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: red";
-  private static final String BORDER_BLACK = "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: black";
+  private static final String BORDER_READ =
+      "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: red";
+  private static final String BORDER_BLACK =
+      "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: black";
   @FXML private Label name;
   @FXML private TextField value;
   @FXML private Slider slider;
@@ -22,6 +23,13 @@ public class NumericDoubleFieldController implements Initializable {
   @Override public void initialize(URL location, ResourceBundle resources) {
     value.setStyle(BORDER_BLACK);
     setVerifyNumericFields();
+    setSliderNumericListener();
+  }
+
+  private void setSliderNumericListener() {
+    slider.valueProperty()
+          .addListener(((observable, oldValue, newValue) -> value.textProperty()
+                                                                 .setValue(Double.toString(newValue.doubleValue()))));
   }
 
   private void setVerifyNumericFields() {
@@ -29,7 +37,7 @@ public class NumericDoubleFieldController implements Initializable {
       try {
         verifyNumber(keyEvent);
         value.setStyle(BORDER_BLACK);
-      } catch (IllegalArgumentException ignore){
+      } catch (IllegalArgumentException ignore) {
         handleNotNumber();
       }
     });
@@ -41,8 +49,8 @@ public class NumericDoubleFieldController implements Initializable {
 
   private double verifyNumber(KeyEvent keyEvent) {
     String newValueStr = ((TextField) keyEvent.getTarget()).getText();
-    double newValue =  Double.parseDouble(newValueStr);
-    if(newValue < slider.minProperty().getValue() || slider.maxProperty().getValue() < newValue){
+    double newValue = Double.parseDouble(newValueStr);
+    if (newValue < slider.minProperty().getValue() || slider.maxProperty().getValue() < newValue) {
       throw new IllegalArgumentException();
     }
     slider.setValue(newValue);
