@@ -47,14 +47,13 @@ public class NumericDoubleFieldController implements Initializable {
     value.setStyle(BORDER_READ);
   }
 
-  private double verifyNumber(KeyEvent keyEvent) {
+  private void verifyNumber(KeyEvent keyEvent) {
     String newValueStr = ((TextField) keyEvent.getTarget()).getText();
     double newValue = Double.parseDouble(newValueStr);
     if (newValue < slider.minProperty().getValue() || slider.maxProperty().getValue() < newValue) {
       throw new IllegalArgumentException();
     }
     slider.setValue(newValue);
-    return newValue;
   }
 
   public Label getName() {
