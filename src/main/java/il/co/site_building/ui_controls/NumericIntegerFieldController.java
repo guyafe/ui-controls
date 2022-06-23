@@ -10,7 +10,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
-public class NumericDoubleFieldController implements Initializable {
+public class NumericIntegerFieldController implements Initializable {
 
   private static final String BORDER_READ =
       "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: red";
@@ -29,7 +29,7 @@ public class NumericDoubleFieldController implements Initializable {
   private void setSliderNumericListener() {
     slider.valueProperty()
           .addListener(((observable, oldValue, newValue) -> value.textProperty()
-                                                                 .setValue(Double.toString(newValue.doubleValue()))));
+                                                                 .setValue(Integer.toString(newValue.intValue()))));
   }
 
   private void setVerifyNumericFields() {
@@ -52,7 +52,7 @@ public class NumericDoubleFieldController implements Initializable {
 
   private void verifyNumber(KeyEvent keyEvent) {
     String newValueStr = ((TextField) keyEvent.getTarget()).getText();
-    double newValue = Double.parseDouble(newValueStr);
+    int newValue = Integer.parseInt(newValueStr);
     if (newValue < slider.minProperty().getValue() || slider.maxProperty().getValue() < newValue) {
       throw new IllegalArgumentException();
     }
