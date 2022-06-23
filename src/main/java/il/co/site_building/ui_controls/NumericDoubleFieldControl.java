@@ -1,15 +1,14 @@
 package il.co.site_building.ui_controls;
 
+import java.io.IOException;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
 
 public class NumericDoubleFieldControl extends AnchorPane {
 

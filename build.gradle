@@ -11,7 +11,7 @@ buildscript {
 
 }
 group 'il.co.site_building.ui_controls'
-version resolveVersion("0.0")
+version resolveVersion()
 
 apply plugin: "org.openjfx.javafxplugin"
 
