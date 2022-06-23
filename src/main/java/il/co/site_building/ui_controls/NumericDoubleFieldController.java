@@ -29,7 +29,7 @@ public class NumericDoubleFieldController implements Initializable {
       try {
         verifyNumber(keyEvent);
         value.setStyle(BORDER_BLACK);
-      } catch (NumberFormatException ignore){
+      } catch (IllegalArgumentException ignore){
         handleNotNumber();
       }
     });
@@ -41,7 +41,12 @@ public class NumericDoubleFieldController implements Initializable {
 
   private double verifyNumber(KeyEvent keyEvent) {
     String newValueStr = ((TextField) keyEvent.getTarget()).getText();
-    return Double.parseDouble(newValueStr);
+    double newValue =  Double.parseDouble(newValueStr);
+    if(newValue < slider.minProperty().getValue() || slider.maxProperty().getValue() < newValue){
+      throw new IllegalArgumentException();
+    }
+    slider.setValue(newValue);
+    return newValue;
   }
 
   public Label getName() {
