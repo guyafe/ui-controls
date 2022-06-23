@@ -1,9 +1,10 @@
 package il.co.site_building.ui_controls;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -14,8 +15,8 @@ public class NumericDoubleFieldControl extends AnchorPane {
 
   private static final String FXML_LOCATION = "il/co/site_building/ui_controls/NumericDoubleField.fxml";
   private NumericDoubleFieldController controller;
-  private final ObjectProperty<String> name = new SimpleObjectProperty<>("Name");
-  private final ObjectProperty<String> value = new SimpleObjectProperty<>("0");
+  private final StringProperty name = new SimpleStringProperty("Name");
+  private final StringProperty value = new SimpleStringProperty("0");
   private final DoubleProperty sliderMinValue = new SimpleDoubleProperty(0.0);
   private final DoubleProperty sliderMaxValue = new SimpleDoubleProperty(1.0);
 
@@ -34,17 +35,17 @@ public class NumericDoubleFieldControl extends AnchorPane {
   }
 
   private void bindProperties() {
-    controller.getName().textProperty().bind(name);
-    controller.getValue().textProperty().bind(value);
-    controller.getSlider().minProperty().bind(sliderMinValue);
-    controller.getSlider().maxProperty().bind(sliderMaxValue);
+    controller.getName().textProperty().bindBidirectional(name);
+    controller.getValue().textProperty().bindBidirectional(value);
+    controller.getSlider().minProperty().bindBidirectional(sliderMinValue);
+    controller.getSlider().maxProperty().bindBidirectional(sliderMaxValue);
   }
 
   public String getName() {
     return name.get();
   }
 
-  public ObjectProperty<String> nameProperty() {
+  public StringProperty nameProperty() {
     return name;
   }
 
@@ -56,7 +57,7 @@ public class NumericDoubleFieldControl extends AnchorPane {
     return value.get();
   }
 
-  public ObjectProperty<String> valueProperty() {
+  public StringProperty valueProperty() {
     return value;
   }
 

@@ -1,22 +1,47 @@
 package il.co.site_building.ui_controls;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.scene.input.KeyEvent;
 
 public class NumericDoubleFieldController implements Initializable {
 
+  private static final String REAL_NUMBER_PATTERN = "";
+  private static final String BORDER_READ = "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: red";
+  private static final String BORDER_BLACK = "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: black";
   @FXML private Label name;
   @FXML private TextField value;
   @FXML private Slider slider;
 
   @Override public void initialize(URL location, ResourceBundle resources) {
+    value.setStyle(BORDER_BLACK);
+    setVerifyNumericFields();
+  }
 
+  private void setVerifyNumericFields() {
+    value.setOnKeyTyped((KeyEvent keyEvent) -> {
+      try {
+        verifyNumber(keyEvent);
+        value.setStyle(BORDER_BLACK);
+      } catch (NumberFormatException ignore){
+        handleNotNumber();
+      }
+    });
+  }
+
+  private void handleNotNumber() {
+    value.setStyle(BORDER_READ);
+  }
+
+  private double verifyNumber(KeyEvent keyEvent) {
+    String newValueStr = ((TextField) keyEvent.getTarget()).getText();
+    return Double.parseDouble(newValueStr);
   }
 
   public Label getName() {
