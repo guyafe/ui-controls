@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 
 public class NumericIntegerFieldController implements Initializable {
 
@@ -19,6 +20,7 @@ public class NumericIntegerFieldController implements Initializable {
   @FXML private Label name;
   @FXML private TextField value;
   @FXML private Slider slider;
+  @FXML private AnchorPane anchor;
 
   @Override public void initialize(URL location, ResourceBundle resources) {
     value.setStyle(BORDER_BLACK);
@@ -81,5 +83,13 @@ public class NumericIntegerFieldController implements Initializable {
 
   public void setSlider(Slider slider) {
     this.slider = slider;
+  }
+
+  public AnchorPane getAnchor() {
+    return anchor;
+  }
+
+  public void setAnchor(AnchorPane anchor) {
+    this.anchor = anchor;
   }
 }

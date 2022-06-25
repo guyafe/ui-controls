@@ -18,6 +18,7 @@ public class NumericDoubleFieldControl extends AnchorPane {
   private final StringProperty value = new SimpleStringProperty("0");
   private final DoubleProperty sliderMinValue = new SimpleDoubleProperty(0.0);
   private final DoubleProperty sliderMaxValue = new SimpleDoubleProperty(1.0);
+  private final DoubleProperty anchorPrefWidth = new SimpleDoubleProperty();
 
   public NumericDoubleFieldControl() {
     super();
@@ -38,6 +39,7 @@ public class NumericDoubleFieldControl extends AnchorPane {
     controller.getValue().textProperty().bindBidirectional(value);
     controller.getSlider().minProperty().bindBidirectional(sliderMinValue);
     controller.getSlider().maxProperty().bindBidirectional(sliderMaxValue);
+    controller.getAnchor().prefWidthProperty().bindBidirectional(this.prefWidthProperty());
   }
 
   public String getName() {
@@ -62,6 +64,9 @@ public class NumericDoubleFieldControl extends AnchorPane {
 
   public void setValue(String value) {
     this.value.set(value);
+    try {
+      controller.getSlider().setValue(Double.parseDouble(value));
+    } catch (Exception ignore){}
   }
 
   public double getSliderMinValue() {
