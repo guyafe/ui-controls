@@ -2,9 +2,7 @@ package il.co.site_building.ui_controls;
 
 import java.io.IOException;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,8 +14,8 @@ public class NumericIntegerFieldControl extends AnchorPane {
 
   private static final String FXML_LOCATION = "il/co/site_building/ui_controls/NumericIntegerField.fxml";
   private NumericIntegerFieldController controller;
-  private final StringProperty name = new SimpleStringProperty();
-  private final StringProperty value = new SimpleStringProperty();
+  private final StringProperty name = new SimpleStringProperty("Name");
+  private final StringProperty value = new SimpleStringProperty("0");
   private final IntegerProperty sliderMinValue = new SimpleIntegerProperty(0);
   private final IntegerProperty sliderMaxValue = new SimpleIntegerProperty(100);
 
@@ -29,19 +27,15 @@ public class NumericIntegerFieldControl extends AnchorPane {
       loader.setController(controller);
       Node n = loader.load();
       this.getChildren().add(n);
-      bindProperties();
+      TextFieldUtils.bindIntegerProperties(controller,
+                                           name,
+                                           value,
+                                           sliderMinValue,
+                                           sliderMaxValue,
+                                           prefWidthProperty());
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  private void bindProperties() {
-    controller.getName().textProperty().bindBidirectional(name);
-    controller.getValue().textProperty().bindBidirectional(value);
-    controller.getSlider().minProperty().bindBidirectional(sliderMinValue);
-    controller.getSlider().maxProperty().bindBidirectional(sliderMaxValue);
-    controller.getAnchor().prefWidthProperty().bindBidirectional(this.prefWidthProperty());
-
   }
 
   public String getName() {
@@ -68,7 +62,8 @@ public class NumericIntegerFieldControl extends AnchorPane {
     this.value.set(value);
     try {
       this.controller.getSlider().setValue(Integer.parseInt(value));
-    } catch (Exception ignore){}
+    } catch (Exception ignore) {
+    }
   }
 
   public int getSliderMinValue() {

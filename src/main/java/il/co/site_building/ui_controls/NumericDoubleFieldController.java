@@ -3,64 +3,25 @@ package il.co.site_building.ui_controls;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.Property;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
-public class NumericDoubleFieldController implements Initializable {
+public class NumericDoubleFieldController implements Initializable, NumericFieldController {
 
-  private static final String BORDER_READ =
-      "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: red";
-  private static final String BORDER_BLACK =
-      "-fx-text-box-border: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; fx-border-width: 3px; -fx-border-color: black";
   @FXML private Label name;
   @FXML private TextField value;
   @FXML private Slider slider;
   @FXML private AnchorPane anchor;
 
   @Override public void initialize(URL location, ResourceBundle resources) {
-    value.setStyle(BORDER_BLACK);
-    setVerifyNumericFields();
-    setSliderNumericListener();
   }
 
-  private void setSliderNumericListener() {
-    slider.valueProperty()
-          .addListener(((observable, oldValue, newValue) -> value.textProperty()
-                                                                 .setValue(Double.toString(newValue.doubleValue()))));
-  }
-
-  private void setVerifyNumericFields() {
-    value.setOnKeyTyped((KeyEvent keyEvent) -> {
-      try {
-        verifyNumber(keyEvent);
-        value.setStyle(BORDER_BLACK);
-      } catch (IllegalArgumentException ignore) {
-        handleNotNumber();
-      } finally {
-        String newValueStr = ((TextField) keyEvent.getTarget()).getText();
-        value.positionCaret(newValueStr.length());
-      }
-    });
-  }
-
-  private void handleNotNumber() {
-    value.setStyle(BORDER_READ);
-  }
-
-  private void verifyNumber(KeyEvent keyEvent) {
-    String newValueStr = ((TextField) keyEvent.getTarget()).getText();
-    double newValue = Double.parseDouble(newValueStr);
-    if (newValue < slider.minProperty().getValue() || slider.maxProperty().getValue() < newValue) {
-      throw new IllegalArgumentException();
-    }
-    slider.setValue(newValue);
-  }
-
+  @Override
   public Label getName() {
     return name;
   }
@@ -69,6 +30,7 @@ public class NumericDoubleFieldController implements Initializable {
     this.name = name;
   }
 
+  @Override
   public TextField getValue() {
     return value;
   }
@@ -77,6 +39,15 @@ public class NumericDoubleFieldController implements Initializable {
     this.value = value;
   }
 
+  @Override public Property<Number> getMinProperty() {
+    return slider.minProperty();
+  }
+
+  @Override public Property<Number> getMaxProperty() {
+    return slider.maxProperty();
+  }
+
+  @Override
   public Slider getSlider() {
     return slider;
   }
@@ -85,6 +56,7 @@ public class NumericDoubleFieldController implements Initializable {
     this.slider = slider;
   }
 
+  @Override
   public AnchorPane getAnchor() {
     return anchor;
   }

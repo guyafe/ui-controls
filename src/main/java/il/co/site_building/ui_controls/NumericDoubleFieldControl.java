@@ -15,10 +15,9 @@ public class NumericDoubleFieldControl extends AnchorPane {
   private static final String FXML_LOCATION = "il/co/site_building/ui_controls/NumericDoubleField.fxml";
   private NumericDoubleFieldController controller;
   private final StringProperty name = new SimpleStringProperty("Name");
-  private final StringProperty value = new SimpleStringProperty("0");
+  private final StringProperty value = new SimpleStringProperty("0.0");
   private final DoubleProperty sliderMinValue = new SimpleDoubleProperty(0.0);
   private final DoubleProperty sliderMaxValue = new SimpleDoubleProperty(1.0);
-  private final DoubleProperty anchorPrefWidth = new SimpleDoubleProperty();
 
   public NumericDoubleFieldControl() {
     super();
@@ -28,18 +27,10 @@ public class NumericDoubleFieldControl extends AnchorPane {
       loader.setController(controller);
       Node n = loader.load();
       this.getChildren().add(n);
-      bindProperties();
+      TextFieldUtils.bindDoubleProperties(controller, name, value, sliderMinValue, sliderMaxValue, prefWidthProperty());
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  private void bindProperties() {
-    controller.getName().textProperty().bindBidirectional(name);
-    controller.getValue().textProperty().bindBidirectional(value);
-    controller.getSlider().minProperty().bindBidirectional(sliderMinValue);
-    controller.getSlider().maxProperty().bindBidirectional(sliderMaxValue);
-    controller.getAnchor().prefWidthProperty().bindBidirectional(this.prefWidthProperty());
   }
 
   public String getName() {
@@ -66,7 +57,8 @@ public class NumericDoubleFieldControl extends AnchorPane {
     this.value.set(value);
     try {
       controller.getSlider().setValue(Double.parseDouble(value));
-    } catch (Exception ignore){}
+    } catch (Exception ignore) {
+    }
   }
 
   public double getSliderMinValue() {
