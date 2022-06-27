@@ -2,7 +2,11 @@ package il.co.site_building.ui_controls;
 
 import java.io.IOException;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -18,6 +22,10 @@ public class NumericIntegerFieldControl extends AnchorPane {
   private final StringProperty value = new SimpleStringProperty("0");
   private final IntegerProperty sliderMinValue = new SimpleIntegerProperty(0);
   private final IntegerProperty sliderMaxValue = new SimpleIntegerProperty(100);
+  private final DoubleProperty majorTickUnit = new SimpleDoubleProperty(1);
+  private final DoubleProperty minorTickUnit = new SimpleDoubleProperty(10);
+  private final BooleanProperty snapToTicks = new SimpleBooleanProperty(true);
+
 
   public NumericIntegerFieldControl() {
     super();
@@ -32,6 +40,9 @@ public class NumericIntegerFieldControl extends AnchorPane {
                                            value,
                                            sliderMinValue,
                                            sliderMaxValue,
+                                           majorTickUnit,
+                                           minorTickUnit,
+                                           snapToTicks,
                                            prefWidthProperty());
     } catch (IOException e) {
       e.printStackTrace();
@@ -88,5 +99,41 @@ public class NumericIntegerFieldControl extends AnchorPane {
 
   public void setSliderMaxValue(int sliderMaxValue) {
     this.sliderMaxValue.set(sliderMaxValue);
+  }
+
+  public double getMajorTickUnit() {
+    return majorTickUnit.get();
+  }
+
+  public DoubleProperty majorTickUnitProperty() {
+    return majorTickUnit;
+  }
+
+  public void setMajorTickUnit(double majorTickUnit) {
+    this.majorTickUnit.set(majorTickUnit);
+  }
+
+  public double getMinorTickUnit() {
+    return minorTickUnit.get();
+  }
+
+  public DoubleProperty minorTickUnitProperty() {
+    return minorTickUnit;
+  }
+
+  public void setMinorTickUnit(double minorTickUnit) {
+    this.minorTickUnit.set(minorTickUnit);
+  }
+
+  public boolean isSnapToTicks() {
+    return snapToTicks.get();
+  }
+
+  public BooleanProperty snapToTicksProperty() {
+    return snapToTicks;
+  }
+
+  public void setSnapToTicks(boolean snapToTicks) {
+    this.snapToTicks.set(snapToTicks);
   }
 }

@@ -2,7 +2,9 @@ package il.co.site_building.ui_controls;
 
 import java.io.IOException;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -18,6 +20,9 @@ public class NumericDoubleFieldControl extends AnchorPane {
   private final StringProperty value = new SimpleStringProperty("0.0");
   private final DoubleProperty sliderMinValue = new SimpleDoubleProperty(0.0);
   private final DoubleProperty sliderMaxValue = new SimpleDoubleProperty(1.0);
+  private final DoubleProperty majorTickUnit = new SimpleDoubleProperty(0.1);
+  private final DoubleProperty minorTickUnit = new SimpleDoubleProperty(0.5);
+  private final BooleanProperty snapToTicks = new SimpleBooleanProperty(true);
 
   public NumericDoubleFieldControl() {
     super();
@@ -27,7 +32,15 @@ public class NumericDoubleFieldControl extends AnchorPane {
       loader.setController(controller);
       Node n = loader.load();
       this.getChildren().add(n);
-      TextFieldUtils.bindDoubleProperties(controller, name, value, sliderMinValue, sliderMaxValue, prefWidthProperty());
+      TextFieldUtils.bindDoubleProperties(controller,
+                                          name,
+                                          value,
+                                          sliderMinValue,
+                                          sliderMaxValue,
+                                          majorTickUnit,
+                                          minorTickUnit,
+                                          snapToTicks,
+                                          prefWidthProperty());
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -83,5 +96,41 @@ public class NumericDoubleFieldControl extends AnchorPane {
 
   public void setSliderMaxValue(double sliderMaxValue) {
     this.sliderMaxValue.set(sliderMaxValue);
+  }
+
+  public double getMajorTickUnit() {
+    return majorTickUnit.get();
+  }
+
+  public DoubleProperty majorTickUnitProperty() {
+    return majorTickUnit;
+  }
+
+  public void setMajorTickUnit(double majorTickUnit) {
+    this.majorTickUnit.set(majorTickUnit);
+  }
+
+  public double getMinorTickUnit() {
+    return minorTickUnit.get();
+  }
+
+  public DoubleProperty minorTickUnitProperty() {
+    return minorTickUnit;
+  }
+
+  public void setMinorTickUnit(double minorTickUnit) {
+    this.minorTickUnit.set(minorTickUnit);
+  }
+
+  public boolean isSnapToTicks() {
+    return snapToTicks.get();
+  }
+
+  public BooleanProperty snapToTicksProperty() {
+    return snapToTicks;
+  }
+
+  public void setSnapToTicks(boolean snapToTicks) {
+    this.snapToTicks.set(snapToTicks);
   }
 }

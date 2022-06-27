@@ -1,5 +1,6 @@
 package il.co.site_building.ui_controls;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.Property;
@@ -52,6 +53,9 @@ public class TextFieldUtils {
                                           StringProperty value,
                                           DoubleProperty sliderMinValue,
                                           DoubleProperty sliderMaxValue,
+                                          DoubleProperty majorTickUnit,
+                                          DoubleProperty minorTickUnit,
+                                          BooleanProperty snapToTicks,
                                           DoubleProperty prefWidthProperty) {
     bindProperties(controller,
                    name,
@@ -59,6 +63,9 @@ public class TextFieldUtils {
                    sliderMinValue,
                    sliderMaxValue,
                    prefWidthProperty,
+                   majorTickUnit,
+                   minorTickUnit,
+                   snapToTicks,
                    TextFieldUtils::verifyDoubleNumber);
     setSliderNumericDoubleListener(controller.getSlider(), controller.getValue());
   }
@@ -69,6 +76,9 @@ public class TextFieldUtils {
                                            StringProperty value,
                                            IntegerProperty sliderMinValue,
                                            IntegerProperty sliderMaxValue,
+                                           DoubleProperty majorTickUnit,
+                                           DoubleProperty minorTickUnit,
+                                           BooleanProperty snapToTicks,
                                            DoubleProperty prefWidthProperty) {
     bindProperties(controller,
                    name,
@@ -76,6 +86,9 @@ public class TextFieldUtils {
                    sliderMinValue,
                    sliderMaxValue,
                    prefWidthProperty,
+                   majorTickUnit,
+                   minorTickUnit,
+                   snapToTicks,
                    TextFieldUtils::verifyIntegerNumber);
     setSliderNumericIntegerListener(controller.getSlider(), controller.getValue());
   }
@@ -86,11 +99,17 @@ public class TextFieldUtils {
                                     Property<Number> sliderMinValue,
                                     Property<Number> sliderMaxValue,
                                     DoubleProperty prefWidthProperty,
+                                    DoubleProperty majorTickUnit,
+                                    DoubleProperty minorTickUnit,
+                                    BooleanProperty snapToTicks,
                                     NumericKeyEventVerifier verifier) {
     controller.getName().textProperty().bindBidirectional(name);
     controller.getValue().textProperty().bindBidirectional(value);
     controller.getSlider().minProperty().bindBidirectional(sliderMinValue);
     controller.getSlider().maxProperty().bindBidirectional(sliderMaxValue);
+    controller.getSlider().majorTickUnitProperty().bindBidirectional(majorTickUnit);
+    controller.getSlider().minorTickCountProperty().bindBidirectional(minorTickUnit);
+    controller.getSlider().snapToTicksProperty().bindBidirectional(snapToTicks);
     controller.getAnchor().prefWidthProperty().bindBidirectional(prefWidthProperty);
     controller.getValue().setStyle(BORDER_BLACK);
     setVerifyNumericField(controller.getValue(), sliderMinValue, sliderMaxValue, verifier);
