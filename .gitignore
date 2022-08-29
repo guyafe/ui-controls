@@ -141,3 +141,5 @@ lint/tmp/
 *.hprof
 
 /.idea/
+/src/main/java/il/co/site_building/ui_controls/main/
+/src/main/resources/il/co/site_building/ui_controls/main.fxml
